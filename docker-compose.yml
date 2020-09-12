@@ -1,0 +1,32 @@
+version: '3'
+services:
+  market:
+    build: .
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/market
+    depends_on:
+    - mongodb
+
+  web:
+    build:
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: unless-stopped
+    command: mongod --auth
+    ports:
+    - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongomarket
+      MONGO_INITDB_ROOT_PASSWORD: marketmarket
+      MONGO_INITDB_DATABASE: marketdb
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    volumes:
+    - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:
